@@ -1,0 +1,15 @@
+---
+- name: make a build dir
+  file: state=directory name=/root/carbon-relay-ng-dockerized
+
+- name: put Dockerfile
+  template: src=Dockerfile dest=/root/carbon-relay-ng-dockerized/Dockerfile
+
+- name: put start.sh
+  template: src=start.sh dest=/root/carbon-relay-ng-dockerized/start.sh mode=0755
+
+- name: build a Docker image for carbon-relay-ng
+  command: docker build -t gitinsky/carbon-relay-ng:0.1.0 --rm /root/carbon-relay-ng-dockerized
+
+- name: tag it as latest
+  command: docker build -t gitinsky/carbon-relay-ng:latest --rm /root/carbon-relay-ng-dockerized
